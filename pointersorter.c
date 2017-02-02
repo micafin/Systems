@@ -6,8 +6,21 @@
 #include <unistd.h>
 
 
-//what libraries do we actually need?
-/* global declaration of struct Node to be used for this assignment */
+
+/* global declarations:
+ 
+ 
+ "_Node" contains two variables:
+ 1. A char* that points to the word stored in the Node
+ 2. A _Node* that points to the node immediately following the current Node
+ 
+ Node * "head_of_list"
+ 1. Initialized to null
+ 2. This pointer is supposed to point to the head of the "master" list
+ 3. Once head_of_list refers to a Node, the rest of the "master list" can be accessed
+ 
+ */
+
 typedef struct _Node{
   char * word;
   struct _Node * next;
