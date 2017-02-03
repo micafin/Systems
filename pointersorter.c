@@ -5,8 +5,6 @@
 #include <errno.h>
 #include <unistd.h>
 
-
-//what libraries do we actually need?
 /* global declaration of struct Node to be used for this assignment */
 typedef struct _Node{
   char * word;
@@ -199,10 +197,8 @@ int main(int argc, char ** argv){
           printf("This is the current character: %c \n", user_inputted_String[i]);
     
     if(!isalpha(user_inputted_String[i])){
-               char * word = strncpy(word, user_inputted_String+start, i-start);
-               //printf("I am attempting to create a node with this word: %s \n", word);
       n=createNode(start,i,user_inputted_String);
-      printf("done \n");
+     
       if(start==0){
         head_of_list=n;
                     sort(n);
