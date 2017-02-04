@@ -5,26 +5,7 @@
 #include <errno.h>
 #include <unistd.h>
 
-<<<<<<< HEAD
 /* global declaration of struct Node to be used for this assignment */
-=======
-
-
-/* global declarations:
- 
- 
- "_Node" contains two variables:
- 1. A char* that points to the word stored in the Node
- 2. A _Node* that points to the node immediately following the current Node
- 
- Node * "head_of_list"
- 1. Initialized to null
- 2. This pointer is supposed to point to the head of the "master" list
- 3. Once head_of_list refers to a Node, the rest of the "master list" can be accessed
- 
- */
-
->>>>>>> 805f97ea2478d8f26541c89b55fc223b80992242
 typedef struct _Node{
   char * word;
   struct _Node * next;
@@ -48,113 +29,68 @@ Node * head_of_list = NULL;
 
 */
 void sort(Node * n){
-  // printf("\n");
-  // printf("I have entered the sort function!\n");
-  // printf("\n");
 
-  if(n->next == NULL){
-    head_of_list = n;
-    return;
-  }
-  
-  int head_comp_length;
-           
-  int head_of_list_length = sizeof(head_of_list->word)/sizeof(char*);
+    Node* prev = malloc(sizeof(Node));
+    prev = NULL;
+    Node* curr = malloc(sizeof(Node));
+
+    curr = head_of_list;
+   
+    while(curr!=NULL){
+
+      int comp_length = 0;
           
-  int n_length = sizeof(n->word)/sizeof(char*);
-  
-  if(head_of_list_length>n_length){
-    head_comp_length = n_length;
-  }
-
-  else{
-    head_comp_length = head_of_list_length;
-  }
-  
-  int head_comp=strncmp(n->word,head_of_list->word, head_comp_length);
-  
-  if(head_comp <0){
-    head_of_list = n;
-    return;
-  }
-
-  else if(head_comp==0){
-       
-    if(head_of_list_length>n_length){
-      n->next = head_of_list;
-      head_of_list = n;
-      return;
-    }
-
-    else{
-      n->next= head_of_list-> next;
-      head_of_list->next = n;
-      return;
-    } 
-    
-  }
-  
-  Node* prev = malloc(sizeof(Node));
-  prev = NULL;
-  Node* curr = malloc(sizeof(Node));
-  
-  curr = head_of_list;
-   
-  while(curr!=NULL){
-    printf("I HAVE ENTERED THE SORTING WHILE LOOP \n");
-   
-    int comp_length = 0;
-     
-    int curr_length = sizeof(curr->word)/sizeof(char*);
-       
-    if(curr_length>n_length){
-      comp_length = n_length;
-    }
-
-    else{
-      comp_length = curr_length;
-    }
+      int curr_length = strlen(curr->word);
+      int n_length = strlen(n->word);
                
-    int comp=strncmp(n->word,curr->word, comp_length);
-    
-    printf("I have compared %s and %s, and this is the number: %d \n", curr->word, n->word, comp);
+          if(curr_length<n_length){
+              comp_length = n_length;
+          }else{
+              comp_length = curr_length;
+          }
+         
+          int comp=strncmp(n->word,curr->word,comp_length);
           
     if(comp>0){
-         prev=curr;
+      prev=curr;
       curr=curr->next;
+      
+      if(curr == NULL){
+        n->next = curr;
+        prev->next = n;
+        return;
+      }  
     }
     else if(comp==0){
          if(curr_length>n_length){
              n->next = curr;
-             prev->next = n;
+             if(prev!=NULL)
+                prev->next = n;
+              else{
+                head_of_list=n;
+              }
              return;
          }else{
-           n->next= curr-> next;
+           n->next= curr->next;
            curr->next = n;
            return;
          }
     }else{
          
       if(prev==NULL){
-        printf("Prev was set to null, so %s was inserted \n", n->word);
         n->next=curr;
+        head_of_list=n;
         return;
       }
-      
       else{
-        printf("%s comes after %s and before %s \n", n->word, prev->word, curr->word);
         n->next=curr;
         prev->next=n; 
         return;
       } 
     }
   }
-
-  if(curr == NULL){
-    n->next = curr;
-    prev->next = n;
-    return;
-  } 
+  
+  
 
 }
 
@@ -168,7 +104,6 @@ void printList(Node * start){
     printf("%s\n",start->word);
     start=start->next;
   }
-
 }
 
 //separates words into linked list
@@ -176,13 +111,13 @@ void printList(Node * start){
 /* Following method creates a Node with the indicated portion of the string
    
    From the main method: 
-     the main method calls createNode upon finding a delimiter, passing to this function the index of the start of the portion of the string, and the the index of the delimiter
+     the main method calls createNode upon finding a delimiter, passing to this function the index of the start of the portion of the string, and the index of the delimiter
      
    IN THE FUNCTION:
     
    1. Memory is allocated for the Node
    
-   2. Node->word is set to equal the portion of the string passed in by using strncpy
+   2. Node->word is set to equal the portion of the string passed in by using memcpy
  
    3. Node->next is initialized to null
 
@@ -190,15 +125,14 @@ void printList(Node * start){
  
 */
 Node * createNode(int start, int end, char * user_inputted_String){
-    
   Node * created_node=malloc(sizeof(Node));
-  
   created_node->word=(char*)malloc((end-start)*sizeof(char)); 
-  
-  created_node->word = strncpy(created_node->word,user_inputted_String+start,end-start);
-  
+  created_node->word = memcpy(created_node->word,user_inputted_String+start,end-start); 
+
+  if(!isalpha(created_node->word[0])){
+    return NULL;
+  }
   created_node->next=NULL;
-     
   return created_node;
 
 }
@@ -209,62 +143,46 @@ int main(int argc, char ** argv){
     fprintf(stderr,"ERROR: Incorrect amount of arguments entered.\n");
     return 1;
   }
-  
   char * user_inputted_String=argv[1];
         
-  int current_place_in_String=0,start=0;
-  
+  int i=0,start=0;
   Node * n=(Node*)malloc(sizeof(Node));
-  
-  while(user_inputted_String[current_place_in_String]!='\0'){
-
-    printf("This is the current character: %c \n", user_inputted_String[current_place_in_String]);
+ 
+  while(user_inputted_String[i]!='\0'){
     
-<<<<<<< HEAD
     if(!isalpha(user_inputted_String[i])){
+
       n=createNode(start,i,user_inputted_String);
-     
-=======
-    if(!isalpha(user_inputted_String[current_place_in_String])){
-      n=createNode(start,current_place_in_String,user_inputted_String);
-      printf("done \n");
-      
->>>>>>> 805f97ea2478d8f26541c89b55fc223b80992242
+
       if(start==0){
         head_of_list=n;
-        sort(n);
       }
-      
       else{
-        n->next = head_of_list;
         sort(n);
       }
-
-      start=current_place_in_String+1;
-      
+      start=i+1;
     }
-    current_place_in_String++;
+    i++;
           
-    if(user_inputted_String[current_place_in_String]=='\0'){
-      
-      n=createNode(start,current_place_in_String,user_inputted_String);
-      n->next = head_of_list;
-      sort(n);
-      printf("This is the head node: %s \n", head_of_list->word);
+          if(user_inputted_String[i]=='\0'){
 
-    }
+             n=createNode(start,i,user_inputted_String);
+             if(n!=NULL)
+              sort(n);
+             break;
+           }
                   
-    
   }
-  if(head_of_list->word==NULL){
-    
-    printf("\n");
-    return 0;
-  }     
+       
   printList(head_of_list);
-  //free(prev);
   free(n);
-  //free(head);
+  Node *temp=(Node*)malloc(sizeof(Node));
+  while(head_of_list!=NULL){
+    temp=head_of_list;
+    head_of_list=temp->next;
+    free(temp->word);
+    free(temp);
+  }
   return 0;
 
 }
