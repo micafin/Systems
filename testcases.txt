@@ -1,0 +1,32 @@
+Micole Finehart
+mcf155
+
+Sridhar Sriram 
+sss293
+
+
+bye stuff hot
+
+hot stuff bye (DOUBLE FREE ERROR)
+
+1234234 
+
+ht/dtuff/bye/ (DOUBLE FREE ERROR)
+
+min minute MINIMAL minutia MIN minutian
+
+min minute minimal minutia minimal
+
+min minute minimal  minutia minimal (SEGMENTATION FAULT)
+
+HELLO hello Hello HELLo HEllo HELlo
+
+HELLO hello Hello HELLo HEllo HELlo  /
+
+bbbbbbbb uuuuuuuuu  jjjjjjjj ju llllllll ttt ts
+
+Hello Zebra/blarg; thing’ stuff” (SEGMENTATION FAULT)
+
+
+
+

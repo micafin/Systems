@@ -37,7 +37,7 @@ void sort(Node * n){
     // printf("string: %s\n", n->word);
     // printf("string length: %d \n",strLength);
 
-    int head_comp_length;
+    //int head_comp_length;
            
     int head_of_list_length =strlen(head_of_list->word);
           
