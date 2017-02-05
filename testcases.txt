@@ -4,29 +4,78 @@ mcf155
 Sridhar Sriram 
 sss293
 
+INPUT:”bye stuff hot”
+OUTPUT:
+bye
+hot
+stuff
 
-bye stuff hot
+INPUT:”hot stuff bye”
+OUTPUT:
+bye
+hot
+stuff 
 
-hot stuff bye (DOUBLE FREE ERROR)
+INPUT:”1234234” 
+OUTPUT:
 
-1234234 
+INPUT:”ht/dtuff/bye/“ 
+OUTPUT:
+bye
+dtuff
+ht
 
-ht/dtuff/bye/ (DOUBLE FREE ERROR)
+INPUT:”min minute MINIMAL123 minutia@ MIN minutian”
+OUTPUT:
+MIN
+MINIMAL
+min
+minute
+minutia
+minutian
 
-min minute MINIMAL minutia MIN minutian
+INPUT:”min minute minimal  minutia minimal” 
+OUTPUT:
+min
+minimal
+minimal
+minute
+minutia
 
-min minute minimal minutia minimal
+INPUT:”HELLO hello Hello HELLo HEllo HELlo  /“ 
+OUTPUT:
+HELLO
+HELLo
+HELlo
+HEllo
+Hello
+hello
 
-min minute minimal  minutia minimal (SEGMENTATION FAULT)
+INPUT:”bbbbbbbb uuuuuuuuu  jjjjjjjj ju llllllll ttt ts”
+OUTPUT:
+bbbbbbbb
+jjjjjjjj
+ju
+llllllll
+ts
+ttt
+uuuuuuuuu
 
-HELLO hello Hello HELLo HEllo HELlo
+INPUT:”Hello Zebra/blarg; thing’ stuff” 
+OUTPUT:
+Hello
+Zebra
+blarg
+stuff
+thing
 
-HELLO hello Hello HELLo HEllo HELlo  /
+INPUT:" 25hi pp abc ABc 12213   ABC45”
+OUTPUT:
+ABC
+ABc
+abc
+hi
+pp
 
-bbbbbbbb uuuuuuuuu  jjjjjjjj ju llllllll ttt ts
-
-Hello Zebra/blarg; thing’ stuff” (SEGMENTATION FAULT)
-
-
-
-
+INPUT:””
+OUTPUT:
