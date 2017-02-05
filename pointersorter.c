@@ -34,6 +34,11 @@ void sort(Node * n){
     prev = NULL;
     Node* curr = malloc(sizeof(Node));
 
+    if(head_of_list==NULL){
+        head_of_list=n;
+        return;
+    }
+
     curr = head_of_list;
    
     while(curr!=NULL){
@@ -64,8 +69,9 @@ void sort(Node * n){
     else if(comp==0){
          if(curr_length>n_length){
              n->next = curr;
-             if(prev!=NULL)
+             if(prev!=NULL){
                 prev->next = n;
+             }
               else{
                 head_of_list=n;
               }
@@ -89,8 +95,6 @@ void sort(Node * n){
       } 
     }
   }
-  
-  
 
 }
 
@@ -149,26 +153,26 @@ int main(int argc, char ** argv){
   Node * n=(Node*)malloc(sizeof(Node));
  
   while(user_inputted_String[i]!='\0'){
+
     
     if(!isalpha(user_inputted_String[i])){
 
-      n=createNode(start,i,user_inputted_String);
 
-      if(start==0){
-        head_of_list=n;
-      }
-      else{
+      n=createNode(start,i,user_inputted_String);
+      if(n!=NULL){
         sort(n);
       }
       start=i+1;
     }
+
     i++;
-          
           if(user_inputted_String[i]=='\0'){
 
              n=createNode(start,i,user_inputted_String);
+
              if(n!=NULL)
               sort(n);
+            
              break;
            }
                   
