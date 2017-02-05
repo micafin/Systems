@@ -180,8 +180,9 @@ int main(int argc, char ** argv){
        
   printList(head_of_list);
   free(n);
-  Node *temp=(Node*)malloc(sizeof(Node));
+ 
   while(head_of_list!=NULL){
+    Node *temp=(Node*)malloc(sizeof(Node));
     temp=head_of_list;
     head_of_list=temp->next;
     free(temp->word);
